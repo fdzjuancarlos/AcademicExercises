@@ -87,7 +87,9 @@ NodoLista<T>* Lista::obtenerN(int n){
 	return iterator;
 }
 
-void Lista::modificar_n(int n,T datos);
+void Lista::modificar_n(int n,T datos){
+	
+}
 
 
 

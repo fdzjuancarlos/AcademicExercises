@@ -88,7 +88,7 @@ NodoLista<T>* Lista::obtenerN(int n){
 }
 
 void Lista::modificar_n(int n,T datos){
-	
+	obtenerN(n)->setDatos(datos);
 }
 
 

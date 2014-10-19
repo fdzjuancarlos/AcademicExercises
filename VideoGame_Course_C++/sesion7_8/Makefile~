@@ -9,7 +9,7 @@ LDLIBS=
 all: main
 
 main:
-	g++ $(CXXFLAGS) -o main main.cpp
+	g++ $(CXXFLAGS) -o main Vec3.cpp NodoLista.cpp Lista.cpp main.cpp
 	
 nodo:
 	g++ $(CXXFLAGS) -o main NodoLista.cpp
