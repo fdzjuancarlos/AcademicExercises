@@ -9,7 +9,7 @@ LDLIBS=
 all: main
 
 main:
-	g++ $(CXXFLAGS) -o main main.cpp
+	g++ $(CXXFLAGS) -o main Vec3.cpp Entity3D.cpp Player.cpp Enemy.cpp main.cpp
 	
 nodo:
 	g++ $(CXXFLAGS) -o main NodoLista.cpp
@@ -19,4 +19,4 @@ test:
 
 
 clean:
-	$(RM) *.o *.a main *~
+	$(RM) *.o *.a main *~ headers/*~

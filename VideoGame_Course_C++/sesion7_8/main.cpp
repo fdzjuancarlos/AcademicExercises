@@ -3,6 +3,9 @@
 #include <vector>
 #include <sstream>
 #include "Lista.h"
+#include "Entity3D.h"
+#include "Player.h"
+#include "Enemy.h"
 using namespace std;
 
 int getData(string dataName);
@@ -25,6 +28,22 @@ int main(int argc, char *argv[]){
 	}catch(ListException e){
 		std::cout << e.getReason() << std::endl;
 	}
+	std::string name("Bartolo");
+	std::string weaponName("Colisionador de Hadrones");
+	
+	Player newPlayer(name, 3, 4, 5, weaponName);
+	std::cout << newPlayer.getCoordX() << " y tiene el arma " << newPlayer.getWeaponName() << std::endl;
+	
+	std::string enemyName("Troll de las cavernas");
+	
+	Entity3D* p_entity;
+	Enemy troll(enemyName, 3, 3, 3, 15);
+	p_entity = &troll;
+	std::cout << p_entity->getName() << " obtenido a través de polimorfismo" << std::endl;
+	
+	Lista<Entity3D*>* listaClases = new Lista<Entity3D*>;
+	listaClases->insertarInicio(&troll);
+	std::cout << "Nombre: " <<listaClases->getCabeza()->getDatos()->getName()  << " obtenido a través de lista de apuntadores con polimorfismo" << std::endl;
 	
 	return 0;
 }
