@@ -5,6 +5,7 @@
 #define LISTA_H
 
 #include "NodoLista.h"
+#include "ListException.h"
 
 template<class T>
 class Lista {
@@ -27,18 +28,30 @@ public:
 	}
 	
 	NodoLista<T>* getCabeza (){
+		if(_cabeza == NULL){
+			std::string problem("Exception: Empty List");
+			throw ListException(problem);
+			}
 		return _cabeza;
 		// if null throw exception
 	}
 	
 	NodoLista<T>* getCola(){
+		if(_cabeza == NULL){
+			std::string problem("Exception: Empty List");
+			throw ListException(problem);
+		}
 		return _cola;
 	}
 	
 	NodoLista<T>* obtenerN(int n){
 		NodoLista<T>* iterator=_cabeza;
-		for (unsigned int i = 0; i < n; i += 1){ //if null throw exception
+		for (unsigned int i = 0; i < n; i += 1){
 			iterator=iterator->siguiente();
+			if(iterator==NULL){
+				std::string problem("Exception: Out of Bounds");
+				throw ListException(problem);
+			}
 		}
 		return iterator;
 	}

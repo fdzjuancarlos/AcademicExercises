@@ -13,13 +13,18 @@ int main(int argc, char *argv[]){
 	int five = 5;
 	int six = 6;
 	int seven = 7;
+	try{
+	myLista->getCabeza()->getDatos();
 	myLista->insertarInicio(five);
 	myLista->insertarFinal(six);
 	myLista->insertarFinal(seven);
-	myLista->insertar_n(1, five);
+	myLista->insertar_n(6, five);
 	myLista->modificar_n(0, seven);
 	int pointer = (myLista->getCabeza()->getDatos());
 	std::cout << pointer << " " << myLista->getCola()->getDatos() << " " << myLista->obtenerN(1)->getDatos() << std::endl;
+	}catch(ListException e){
+		std::cout << e.getReason() << std::endl;
+	}
 	
 	return 0;
 }
