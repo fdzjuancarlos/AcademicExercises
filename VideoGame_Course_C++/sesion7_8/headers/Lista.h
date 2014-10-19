@@ -44,8 +44,18 @@ public:
 	}
 	
 	void insertarFinal (T datos){
-		NodoLista<T>* nuevoNodo = new NodoLista<T>(datos, _cola);
-		_cola = nuevoNodo;
+		if(_cabeza!=NULL){
+			if(_cola!=NULL){
+				NodoLista<T>* nuevoNodo = new NodoLista<T>(datos, _cola);
+				_cola = nuevoNodo;
+			}else{
+				NodoLista<T>* nuevoNodo = new NodoLista<T>(datos, _cabeza);
+				_cola = nuevoNodo;
+			}	
+		}else{
+			NodoLista<T>* nuevoNodo = new NodoLista<T>(datos);
+			_cabeza = nuevoNodo;
+		}
 	}
 	
 	void insertarInicio (T datos){
