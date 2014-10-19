@@ -1,0 +1,5 @@
+Suba en un archivo <nombre>-<primer_apellido>-s6-cedv2014.tar.gz la solución (código fuente y Makefile) al siguiente ejercicio:
+Implemente en C++ estándar las clases Vec3 y Triangle, cuyo esqueleto se expone a continuación. El objetivo de la clase Vec3 es proporcionar la funcionalidad básica para manejar información tridimensional, como por ejemplo un punto o un vector en el espacio 3D. La clase Triangle hace uso de Vec3 para definir sus tres vértices.
+Preste especial atención a la clase Triangle, en concreto a la implementación del constructor de copia y al operador de asignador de copia para reservar memoria de manera adecuada.
+Implemente un menú sencillo en la función principal para instanciar triángulos.
+Nota: extienda la implementación de ambas clases si desea incorporar más funcionalidad.

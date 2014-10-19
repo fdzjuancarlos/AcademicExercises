@@ -1,0 +1,4 @@
+Nombre: palindromos
+Tamanyo: 122
+Lineas: 4
+Palabras Palindromo: 5

@@ -1,0 +1,11 @@
+Suba en un archivo <nombre>-<primer_apellido>-s6-cedv2014.tar.gz la solución (código fuente y Makefile) al siguiente ejercicio:
+Realice una implementación de listas (sin apoyarse en bibliotecas externas) de acuerdo a la propuesta que se resume en las transparencias 17, 18 y 19 de la sesión S8. La funcionalidad [mínima] a soportar es la siguiente:
+
++ Acceso al nodo de inicio y al nodo de fin de la lista.
+
++ A partir de un determinado nodo, ha de ser posible acceder al siguiente y al anterior. En otras palabras, la lista ha de ser doblemente enlazada. Considere que no es posible acceder desde el último nodo al primero ni viceversa.
+
++ Inclusión de las operaciones insertar_n, eliminar_n y modificar_n, que insertar, elimina y modifica un elemento en la posición n, respectivamente.
+
+La implementación ha de permitir el manejo de cualquier tipo de datos. Apóyese en el uso de plantillas. Considere el uso de excepciones a la hora de implementar las operaciones de la lista.
+Cree una jerarquía de clases para realizar sus pruebas con la lista implementada en la que exista una clase Entity3D que sea especializada en Player y Enemy. El estado de la clase Entity3D ha de contemplar como estado, al menos, su nombre y la posición en el espacio 3D. Complete el resto del estado de estas clases con elementos típicos asociados a dichos conceptos.
