@@ -15,4 +15,3 @@ Enemy::Enemy(std::string name,int x,int y,int z,int hp) : Entity3D(name,x,y,z){
 int Enemy::getHp(){
 	return _hp;
 }
-

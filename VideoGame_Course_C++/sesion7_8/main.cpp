@@ -39,7 +39,7 @@ int main(int argc, char *argv[]){
 	Entity3D* p_entity;
 	Enemy troll(enemyName, 3, 3, 3, 15);
 	p_entity = &troll;
-	std::cout << p_entity->getName() << " obtenido a través de polimorfismo" << std::endl;
+	std::cout << p_entity->getName() << " obtenido a través de polimorfismoo" << std::endl;
 	
 	Lista<Entity3D*>* listaClases = new Lista<Entity3D*>;
 	listaClases->insertarInicio(&troll);
