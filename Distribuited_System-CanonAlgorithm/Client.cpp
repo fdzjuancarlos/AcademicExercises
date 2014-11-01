@@ -9,6 +9,9 @@ class Client: public Ice::Application {
     ObjectPrx proxy = communicator()->stringToProxy(argv[1]);
     CollectorPrx collector = CollectorPrx::checkedCast(proxy);
     
+    ObjectPrx proxy2 = communicator()->stringToProxy(argv[2]);
+    ProcessorPrx processor = ProcessorPrx::checkedCast(proxy2);
+    
     Canon::FloatArray array1;
     array1.push_back(1.0);
     array1.push_back(5.3);
@@ -19,8 +22,10 @@ class Client: public Ice::Application {
     matrix.push_back(array1);
     matrix.push_back(array2);
 
-    collector->inject(2,matrix);
-
+    //collector->inject(2,matrix);
+	processor->injectA(matrix, 0);
+	processor->init(0,0,processor,processor,collector);
+	
     return 0;
   }
 };
