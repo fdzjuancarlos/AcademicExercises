@@ -1,7 +1,7 @@
-#ifndef __CollectorI_h__
-#define __CollectorI_h__
+#ifndef __CanonI_h__
+#define __CanonI_h__
 
-#include <Collector.h>
+#include <Canon.h>
 
 namespace Canon
 {
@@ -11,13 +11,13 @@ class CollectorI : virtual public Collector
 public:
 
     virtual void inject(::Ice::Int,
-                        const ::Canon::FloatMatrix&,
+                        const ::Canon::Matrix&,
                         const Ice::Current&);
 };
 
 class ProcessorI : virtual public Processor
 {
-	::Canon::FloatMatrix A;
+	Matrix A;
 public:
 
     virtual void init(::Ice::Int,
@@ -27,19 +27,22 @@ public:
                       const ::Canon::CollectorPrx&,
                       const Ice::Current&);
 
-    virtual void injectA(const ::Canon::FloatMatrix&,
+    virtual void injectA(const ::Canon::Matrix&,
                          ::Ice::Int,
                          const Ice::Current&);
 
-    virtual void injectB(const ::Canon::FloatMatrix&,
+    virtual void injectB(const ::Canon::Matrix&,
                          ::Ice::Int,
                          const Ice::Current&);
 };
 
-class classProcessorI : virtual public classProcessor,
-                        virtual public ::Canon::ProcessorI
+class FrontendI : virtual public Frontend
 {
 public:
+
+    virtual ::Canon::Matrix multiply(const ::Canon::Matrix&,
+                                     const ::Canon::Matrix&,
+                                     const Ice::Current&);
 };
 
 }

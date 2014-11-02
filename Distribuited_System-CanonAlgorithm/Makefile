@@ -3,7 +3,7 @@
 
 include ./cpp-common.mk
 
-APP=Collector
+APP=Canon
 STUBS=$(addprefix $(APP), .h .cpp)
 
 all: Server Client

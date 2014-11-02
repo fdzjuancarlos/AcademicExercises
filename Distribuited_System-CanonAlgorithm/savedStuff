@@ -9,3 +9,10 @@ Canon::CollectorI::inject(::Ice::Int index,
 		std::cout << std::endl;
 	}
 }
+
+	for(float i=0; i < result.data.size(); i++){
+		for(float j=0; j < result.data.size(); j++)
+			std::cout << result.data.at(i).at(j) << " ";
+			
+		std::cout << std::endl;
+	}

@@ -1,5 +1,5 @@
 #include <Ice/Ice.h>
-#include "CollectorI.h"
+#include "CanonI.h"
 
 using namespace std;
 using namespace Ice;
