@@ -1,9 +1,7 @@
 collector1 -t -e 1.1:tcp -h 10.211.55.9 -p 3030
 processor1 -t -e 1.1:tcp -h 10.211.55.9 -p 3031
 not blocked
-llegue0
-llegue1
-llegue2
-llegue3
+13.19 43.46 
+18.86 64.03 
 13.19 43.46 
 18.86 64.03 
