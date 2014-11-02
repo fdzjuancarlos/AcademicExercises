@@ -8,11 +8,17 @@ namespace Canon
 
 class CollectorI : virtual public Collector
 {
+	const Matrix* A;
+	const Matrix* B;
 public:
 
     virtual void inject(::Ice::Int,
                         const ::Canon::Matrix&,
                         const Ice::Current&);
+
+    virtual bool chekedTest(const ::Canon::Matrix&,
+                            const ::Canon::Matrix&,
+                            const Ice::Current&);
 };
 
 class ProcessorI : virtual public Processor

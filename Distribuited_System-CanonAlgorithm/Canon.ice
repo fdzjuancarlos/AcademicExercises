@@ -11,6 +11,7 @@ module Canon{
 	
 	interface Collector {
 		void inject(int index, Matrix result); 
+		bool chekedTest(Matrix a, Matrix b);
 	};
 	
 	interface Processor {

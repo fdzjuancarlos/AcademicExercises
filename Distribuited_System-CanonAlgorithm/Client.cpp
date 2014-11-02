@@ -27,9 +27,11 @@ class Client: public Ice::Application {
     Matrix newMatrix{  5, matrix, "matrix1" };
 
     //collector->inject(2,matrix);
+    collector->chekedTest(newMatrix,newMatrix);
     processor->init(0,0,processor,processor,collector);
 	processor->injectA(newMatrix, 0);
 	processor->injectB(newMatrix, 0);
+	//std::cout << "Es valida:" <<  << std::endl;
 
 	
     return 0;

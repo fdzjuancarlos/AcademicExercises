@@ -1,4 +1,3 @@
-
 #include <CanonI.h>
 
 void multiplyMatrix(const ::Canon::Matrix *A, const ::Canon::Matrix *B, Canon::DoubleMatrix &product);
@@ -14,6 +13,28 @@ Canon::CollectorI::inject(::Ice::Int index,
 			
 		std::cout << std::endl;
 	}
+	
+    bool sameMatrix = true;
+    Canon::DoubleMatrix product;
+    multiplyMatrix(A,B,product);
+
+    for(int i=0; i<A->data.size(); i++){
+    	for(int j=0; j<A->data.size(); j++){
+    		if(result.data.at(i).at(j) != product.at(i).at(j))
+    			sameMatrix=false;
+    	}
+    }
+    
+    std::cout<<  sameMatrix << std::endl;
+}
+
+bool
+Canon::CollectorI::chekedTest(const ::Canon::Matrix& a,
+                              const ::Canon::Matrix& b,
+                              const Ice::Current& current)
+{
+    A= &a;
+    B= &b;
 }
 
 void
