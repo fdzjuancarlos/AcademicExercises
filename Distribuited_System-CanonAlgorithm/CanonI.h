@@ -17,7 +17,11 @@ public:
 
 class ProcessorI : virtual public Processor
 {
-	Matrix A;
+	const Matrix* A;
+	const Matrix* B;
+	::Canon::ProcessorPrx _above;
+    ::Canon::ProcessorPrx _left;
+    Canon::CollectorPrx _target;
 public:
 
     virtual void init(::Ice::Int,

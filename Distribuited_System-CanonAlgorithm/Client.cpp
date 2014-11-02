@@ -27,8 +27,10 @@ class Client: public Ice::Application {
     Matrix newMatrix{  5, matrix, "matrix1" };
 
     //collector->inject(2,matrix);
+    processor->init(0,0,processor,processor,collector);
 	processor->injectA(newMatrix, 0);
-	processor->init(0,0,processor,processor,collector);
+	processor->injectB(newMatrix, 0);
+
 	
     return 0;
   }
