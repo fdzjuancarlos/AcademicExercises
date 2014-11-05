@@ -5,6 +5,25 @@ using namespace Ice;
 using namespace Canon;
 
 class Client: public Ice::Application {
+	
+	Canon::DoubleMatrix getRandomMatrix(int order){
+		srand((unsigned)time(NULL));
+		Canon::DoubleMatrix result;
+		double value;
+		
+		for(int i=0; i<order; i++){
+			Canon::DoubleArray array;
+			for (int j = 0; j < order; j += 1){
+				value=((double)rand()/(double)RAND_MAX);
+				array.push_back(value);
+			}
+			result.push_back(array);
+		}
+		
+
+		return result;
+	}
+	
   int run(int argc, char* argv[]) {
     ObjectPrx proxy = communicator()->stringToProxy(argv[1]);
     CollectorPrx collector = CollectorPrx::checkedCast(proxy);
@@ -14,23 +33,20 @@ class Client: public Ice::Application {
     
 
     
-    Canon::DoubleArray array1;
-    array1.push_back(1.0);
-    array1.push_back(5.3);
-    Canon::DoubleArray array2;
-    array2.push_back(2.3);
-    array2.push_back(7.2);
-    Canon::DoubleMatrix matrix;
-    matrix.push_back(array1);
-    matrix.push_back(array2);
+    Canon::DoubleMatrix matrix = getRandomMatrix(3);
     
     Matrix newMatrix{  5, matrix, "matrix1" };
+    
+    
+	Canon::DoubleMatrix matrix2 = getRandomMatrix(3);
+	
+	Matrix newMatrix2{  5, matrix2, "matrix2" };
 
     //collector->inject(2,matrix);
-    collector->chekedTest(newMatrix,newMatrix);
+    collector->chekedTest(newMatrix,newMatrix2);
     processor->init(0,0,processor,processor,collector);
 	processor->injectA(newMatrix, 0);
-	processor->injectB(newMatrix, 0);
+	processor->injectB(newMatrix2, 0);
 	//std::cout << "Es valida:" <<  << std::endl;
 
 	

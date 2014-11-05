@@ -25,7 +25,11 @@ Canon::CollectorI::inject(::Ice::Int index,
     	}
     }
     
-    std::cout<<  sameMatrix << std::endl;
+    if(sameMatrix){
+    	std::cout<<  "La matriz recibida está correctamente multiplicada" << std::endl;
+    }else{
+    	std::cout<<  "La matriz es incorrecta" << std::endl;
+    	}
 }
 
 bool

@@ -1,9 +1,7 @@
 collector1 -t -e 1.1:tcp -h 10.211.55.9 -p 3030
 processor1 -t -e 1.1:tcp -h 10.211.55.9 -p 3031
 not blocked
-13.19 43.46 
-18.86 64.03 
-1
-13.19 43.46 
-18.86 64.03 
-1
+1.3932 0.518208 1.01815 
+0.778866 0.270374 0.619515 
+0.660413 0.213973 0.43144 
+La matriz recibida está correctamente multiplicada
