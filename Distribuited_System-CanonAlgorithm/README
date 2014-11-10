@@ -1,0 +1,21 @@
+
+Compila mediante comando make
+
+Se ejecuta mediante:
+
+Servidor:
+	make run-server     
+
+Cliente:
+	make run-client
+	
+Los proxys se mandan directamente por argumentos, esto cambiará en la 2º entrega de la práctica
+
+Actualmente no está implementado un collector definitivo si no un doble preparado para comprobar el resultado automáticamente,
+para ello actualmente el cliente transmite las matrices a multiplicar al collector directamente
+
+Cuando el processor envía el resultado al collector, el collector comprueba que el resultado es válido contrastandolo con las
+matrices anteriormente obtenidas por el cliente
+
+Dado que actualmente utilizan la misma función para multiplicar la matriz, entiendo que esto será útil cuando se implementen
+los processors de forma que empiecen a subdividir la matriz para comprobar el correcto funcionamiento del algoritmo de Canon

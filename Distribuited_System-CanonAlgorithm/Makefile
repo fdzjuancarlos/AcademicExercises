@@ -33,7 +33,7 @@ calc:
 	icepatch2calc .
 
 run-server: Server
-	./Server --Ice.Config=Server.config | tee proxy.out
+	./Server --Ice.Config=Server.config
 
 run-client: Client
 	./Client "collector1 -t -e 1.1:tcp -h 10.211.55.9 -p 3030" "processor1 -t -e 1.1:tcp -h 10.211.55.9 -p 3031"

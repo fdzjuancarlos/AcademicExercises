@@ -63,9 +63,11 @@ Canon::ProcessorI::injectA(const ::Canon::Matrix& a,
 		
 		multiplyMatrix(A,B,product);
 		
-		Matrix result{ product.size(), product, "P1"};
+		int size = product.size();
 		
-		_target->inject(product.size(), result);
+		Matrix result{ size, product, "P1"};
+		
+		_target->inject(size, result);
 		A=NULL;
 		B=NULL;
 	}
@@ -82,9 +84,11 @@ Canon::ProcessorI::injectB(const ::Canon::Matrix& b,
 		
 		multiplyMatrix(A,B,product);
 		
-		Matrix result{ product.size(), product, "P1"};
+		int size = product.size();
 		
-		_target->inject(product.size(), result);
+		Matrix result{size, product, "P1"};
+		
+		_target->inject(size, result);
 		A=NULL;
 		B=NULL;
 	}
