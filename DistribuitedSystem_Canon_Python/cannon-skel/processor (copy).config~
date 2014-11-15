@@ -1,0 +1,10 @@
+ProcessorAdapter.Endpoints=tcp -p 3048 -h 10.211.55.9
+CollectorAdapter.Endpoints=tcp -p 3059 -h 10.211.55.9
+
+
+
+
+
+
+
+
