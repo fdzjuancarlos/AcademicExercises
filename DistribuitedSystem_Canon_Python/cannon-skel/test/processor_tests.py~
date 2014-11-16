@@ -8,7 +8,7 @@ import Ice
 Ice.loadSlice('-I {} cannon.ice'.format(Ice.getSliceDir()))
 import Cannon
 
-from processor import ProcessorI
+from processor import ProcessorI, FrontendI
 
 from common import M1, M2
 
@@ -54,9 +54,9 @@ class ProcessorServantTests(TestCase):
         # then
         assert_that(collector.inject, called().with_args(0, C, ANY_ARG))
         
-    def test_processors_2x2_block_rotation(self):
+    def tesst_processors_2x2_block_rotation(self):
         # given
-        P0 = ProcessorI()
+        P0 = Spy()
         P1 = ProcessorI()
         P2 = ProcessorI()
         P3 = ProcessorI()
@@ -72,13 +72,15 @@ class ProcessorServantTests(TestCase):
                43, 50)
         D = M2(9, 10,
         	 11, 12)
+        	 
+      
         
 
         # when
-        P0.init(0, 6, P1, P2, collector)
-        P1.init(1, 6, P0, P3, collector)
-        P2.init(2, 6, P3, P0, collector)
-        P3.init(3, 6, P2, P1, collector)
+        P0.init(0, 4, P1, P2, collector)
+        P1.init(1, 4, P0, P3, collector)
+        P2.init(2, 4, P3, P0, collector)
+        P3.init(3, 4, P2, P1, collector)
         P0.injectA(A, 0)
         P0.injectB(A, 0)
         P1.injectA(B, 0)
@@ -87,6 +89,24 @@ class ProcessorServantTests(TestCase):
         P2.injectB(C, 0)
         P3.injectA(D, 0)
         P3.injectB(D, 0)
+        
+        for i in xrange(0,3):
+        	print(i)
+
         # then
         #assert_that(collector.inject, called().with_args(0, C, ANY_ARG))
+        #assert_that(P0.A.data[0], C.data[0])
+        #assert_that(P0.injectA, called().with_args(1, C, ANY_ARG))
+        
+    def test_frontend(self):
+        # given
+        front = FrontendI()
+
+        A = M6(1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,
+        1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6)
+
+        # when
+        front.multiply(A,A)
+
+        # then
         assert_that(True)

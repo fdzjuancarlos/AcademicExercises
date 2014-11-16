@@ -14,6 +14,27 @@ class CollectorI(Cannon.Collector):
 	def inject(self, index, M, current=None):
 		print("gonna print")
 		printMatrix(M)
+		
+  
+class FrontendI(Cannon.Frontend):
+	def multiply(self, A,B):
+		self.numMatrix = A.ncols/2
+		allMatrix = [[[] for x in range(self.numMatrix)] for x in range(self.numMatrix)] 
+		for i in xrange(0,self.numMatrix):
+			for k in xrange(0, self.numMatrix):
+				newMatrix = []
+				for j in xrange(0,2):
+					for m in xrange(0,2):
+						newMatrix.append(self.getData(A,A.ncols,j+i*2,m+k*2))
+				allMatrix[i][k]=newMatrix
+		print allMatrix
+				
+						
+				
+	
+	def getData(self, Matrix, order, i, j):
+		print(str(i) + " " +str(j))
+		return Matrix.data[i*order+j]
 
 
 class Job(object):
