@@ -38,6 +38,7 @@ class ProcessorI(Cannon.Processor):
 	
     def init(self, index, order, above, left, target, current=None):
     	self.actualStep = 0
+    	self.index = index
     	self.maximumStep = order/2
     	self.target = target
     	self.above = above
@@ -45,8 +46,11 @@ class ProcessorI(Cannon.Processor):
         pass
         
     def successMultiplication(self, step):
+    	if self.index == 0:
+    		print("Proceso P0 " + str(step))
+    		printMatrix(self.A)
     	result = matrix_multiply(self.A,self.B)
-    	self.target.inject(step, result)
+    	#self.target.inject(step, result)
     	if self.actualStep < self.maximumStep -1:
     		self.left.injectA(self.A, step+1)
     		self.above.injectB(self.B, step+1)
@@ -55,7 +59,7 @@ class ProcessorI(Cannon.Processor):
     	self.A = None
     	self.B = None
     	self.actualStep = self.actualStep +1
-    	if not self.work_queue.empty():
+    	while not self.work_queue.empty():
     		job = self.work_queue.get()
     		self.work_queue.task_done()
     		job.execute(self)

@@ -17,7 +17,7 @@ class ProcessorServantTests(TestCase):
     """
     These are NOT remote tests. We directly instantiate servants here.
     """
-    def test_processors_1x1_block(self):
+    def tesst_processors_1x1_block(self):
         # given
         P0 = ProcessorI()
         collector = Spy()
@@ -34,7 +34,7 @@ class ProcessorServantTests(TestCase):
         # then
         assert_that(collector.inject, called().with_args(0, C, ANY_ARG))
 
-    def test_processors_2x2_block(self):
+    def tesst_processors_2x2_block(self):
         # given
         P0 = ProcessorI()
         collector = Spy()
@@ -75,10 +75,10 @@ class ProcessorServantTests(TestCase):
         
 
         # when
-        P0.init(0, 4, P1, P2, collector)
-        P1.init(0, 4, P0, P3, collector)
-        P2.init(0, 4, P3, P0, collector)
-        P3.init(0, 4, P2, P1, collector)
+        P0.init(0, 6, P1, P2, collector)
+        P1.init(1, 6, P0, P3, collector)
+        P2.init(2, 6, P3, P0, collector)
+        P3.init(3, 6, P2, P1, collector)
         P0.injectA(A, 0)
         P0.injectB(A, 0)
         P1.injectA(B, 0)
@@ -87,7 +87,6 @@ class ProcessorServantTests(TestCase):
         P2.injectB(C, 0)
         P3.injectA(D, 0)
         P3.injectB(D, 0)
-        print("hah")
         # then
         #assert_that(collector.inject, called().with_args(0, C, ANY_ARG))
         assert_that(True)
