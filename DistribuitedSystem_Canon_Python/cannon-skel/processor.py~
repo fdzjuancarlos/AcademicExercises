@@ -8,45 +8,78 @@ Ice.loadSlice('-I {} cannon.ice'.format(Ice.getSliceDir()))
 import Cannon
 from matrix_utils import matrix_multiply
 from matrix_utils import printMatrix
+from Queue import Queue
 
 class CollectorI(Cannon.Collector):
 	def inject(self, index, M, current=None):
 		print("gonna print")
 		printMatrix(M)
+
+
+class Job(object):
+    def __init__(self, kindOfMatrix , Matrix, step):
+        self.kindOfMatrix = kindOfMatrix
+        self.Matrix = Matrix
+        self.step = step
+
+    def execute(self, processor):
+        if self.kindOfMatrix == 'A':
+        	processor.injectA(Matrix, step)
+        else:
+        	processor.injectB(Matrix, step)
 	
 
 class ProcessorI(Cannon.Processor):
 	A= None
 	B= None
+	
+    def __init__(self):
+        self.work_queue = Queue()
+	
     def init(self, index, order, above, left, target, current=None):
+    	self.actualStep = 0
+    	self.maximumStep = order/2
     	self.target = target
+    	self.above = above
+    	self.left = left
         pass
+        
+    def successMultiplication(self, step):
+    	result = matrix_multiply(self.A,self.B)
+    	self.target.inject(step, result)
+    	if self.actualStep < self.maximumStep -1:
+    		self.left.injectA(self.A, step+1)
+    		self.above.injectB(self.B, step+1)
+    	else:
+    		self.target.inject(step, result)
+    	self.A = None
+    	self.B = None
+    	self.actualStep = self.actualStep +1
+    	if not self.work_queue.empty():
+    		job = self.work_queue.get()
+    		self.work_queue.task_done()
+    		job.execute(self)
 
     def injectA(self, A, step, current=None):
-    	if self.B is not None:
-    		result = matrix_multiply(A,self.B)
-    		self.target.inject(step, result)
-    		self.A = None
-    		self.B = None
-    	else:
-    		self.A = A
-    		print("self.A = A")
-        pass
+    	if self.actualStep == step:
+			if self.B is not None:
+				self.A = A
+				self.successMultiplication(step)
+			else:
+				self.A = A
+		else:
+			self.work_queue.put(Job('A',A, step))
+			
 
     def injectB(self, B, step, current=None):
-		if self.A is not None:
-			print("bEFORE MULTIPLY")
-			result = matrix_multiply(self.A,B)
-			print("bEFORE INJECT TO COLLECTOR")
-			print (self.target is None)
-			self.target.inject(1, result)
-			print("antes de los nones")
-    		self.A = None
-    		self.B = None
-    	else:
-			self.B = B
-			print("self.B = B")
-        pass
+    	if self.actualStep == step:
+			if self.A is not None:
+				self.B = B
+				self.successMultiplication(step)
+			else:
+				self.B = B
+		else:
+			self.work_queue.put(Job('B',B, step))
 
 
 class Server(Ice.Application):
@@ -64,7 +97,6 @@ class Server(Ice.Application):
         print('processor ready: "{}"'.format(proxy))
         print('collector ready: "{}"'.format(newProxy))
 		
-		servant.init(1,1,None,None,collector)
 		collectorAdapter.activate()
         adapter.activate()
         self.shutdownOnInterrupt()

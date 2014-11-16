@@ -87,6 +87,7 @@ class ProcessorServantTests(TestCase):
         P2.injectB(C, 0)
         P3.injectA(D, 0)
         P3.injectB(D, 0)
+        print("hah")
         # then
         #assert_that(collector.inject, called().with_args(0, C, ANY_ARG))
         assert_that(True)
