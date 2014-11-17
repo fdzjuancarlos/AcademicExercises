@@ -10,7 +10,7 @@ import Cannon
 
 from processor import ProcessorI, FrontendI
 
-from common import M1, M2
+from common import M1, M2, M6, M4
 
 
 class ProcessorServantTests(TestCase):
@@ -104,6 +104,7 @@ class ProcessorServantTests(TestCase):
 
         A = M6(1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6  ,
         1,2,3,4,5,6  ,1,2,3,4,5,6  ,1,2,3,4,5,6)
+        #A = M4(1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4)
 
         # when
         front.multiply(A,A)
