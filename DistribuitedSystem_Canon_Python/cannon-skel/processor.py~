@@ -29,20 +29,16 @@ class FrontendI(Cannon.Frontend):
 					for m in xrange(0,2):
 						newMatrix.append(self.getData(A,A.ncols,j+i*2,m+k*2))
 				allMatrix[i][k]=newMatrix
-		#print allMatrix
+
 		for i in xrange(0,self.numMatrix):
 			for j in xrange(0,i):
 				temporal = deepcopy(allMatrix)
 				for k in xrange(0,self.numMatrix):
 					if k == 0:
 						m=k
-						#print("allMatrix[" + str(i) +"][" + str(self.numMatrix-1-m)+"] = temporal[" + str(i)+ "][" + str(m)+ "]")
-						#print(str(allMatrix[i][self.numMatrix-1-m]) + " = " + str(temporal[i][m]))
 						allMatrix[i][self.numMatrix-1-m] = temporal[i][m]
 					else:
 						m=self.numMatrix-k
-						#print("allMatrix[" + str(i) +"][" + str(self.numMatrix-1-k)+"] = temporal[" + str(i)+ "][" + str(m)+ "]")
-						#print(str(allMatrix[i][self.numMatrix-1-m]) + " = " + str(temporal[i][m]))
 						allMatrix[i][self.numMatrix-1-k] = temporal[i][m]
 		#B Matrix
 		BallMatrix = [[[] for x in range(self.numMatrix)] for x in range(self.numMatrix)] 
@@ -53,25 +49,18 @@ class FrontendI(Cannon.Frontend):
 					for m in xrange(0,2):
 						newMatrix.append(self.getData(B,B.ncols,j+i*2,m+k*2))
 				BallMatrix[i][k]=newMatrix
-		print BallMatrix
+
 		for i in xrange(0,self.numMatrix):
 			for j in xrange(0,i):
 				temporal = deepcopy(BallMatrix)
 				for k in xrange(0,self.numMatrix):
 					if k == 0:
 						m=k
-						print("BallMatrix[" + str(self.numMatrix-1-m) +"][" + str(i)+"] = temporal[" + str(m)+ "][" + str(i)+ "]")
-						print(str(BallMatrix[self.numMatrix-1-m][i]) + " = " + str(temporal[m][i]))
 						BallMatrix[self.numMatrix-1-m][i] = temporal[m][i]
 					else:
 						m=self.numMatrix-k
-						print("BallMatrix[" + str(self.numMatrix-1-m) +"][" + str(i)+"] = temporal[" + str(m)+ "][" + str(i)+ "]")
-						print(str(BallMatrix[self.numMatrix-1-m][i]) + " = " + str(temporal[m][i]))
 						BallMatrix[self.numMatrix-1-k][i] = temporal[m][i]
 						
-					
-		
-		print BallMatrix
 				
 						
 				
@@ -110,9 +99,6 @@ class ProcessorI(Cannon.Processor):
         pass
         
     def successMultiplication(self, step):
-    	if self.index == 0:
-    		print("Proceso P0 " + str(step))
-    		printMatrix(self.A)
     	result = matrix_multiply(self.A,self.B)
     	#self.target.inject(step, result)
     	if self.actualStep < self.maximumStep -1:
