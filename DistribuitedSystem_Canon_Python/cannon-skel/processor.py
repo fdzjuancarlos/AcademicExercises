@@ -16,56 +16,7 @@ class CollectorI(Cannon.Collector):
 		printMatrix(M)
 		
   
-class FrontendI(Cannon.Frontend):
-	def multiply(self, A,B):
-		self.numMatrix = A.ncols/2
-		#A Matrix
-		allMatrix = [[[] for x in range(self.numMatrix)] for x in range(self.numMatrix)] 
-		for i in xrange(0,self.numMatrix):
-			for k in xrange(0, self.numMatrix):
-				newMatrix = []
-				for j in xrange(0,2):
-					for m in xrange(0,2):
-						newMatrix.append(self.getData(A,A.ncols,j+i*2,m+k*2))
-				allMatrix[i][k]=newMatrix
 
-		for i in xrange(0,self.numMatrix):
-			for j in xrange(0,i):
-				temporal = deepcopy(allMatrix)
-				for k in xrange(0,self.numMatrix):
-					if k == 0:
-						m=k
-						allMatrix[i][self.numMatrix-1-m] = temporal[i][m]
-					else:
-						m=self.numMatrix-k
-						allMatrix[i][self.numMatrix-1-k] = temporal[i][m]
-		#B Matrix
-		BallMatrix = [[[] for x in range(self.numMatrix)] for x in range(self.numMatrix)] 
-		for i in xrange(0,self.numMatrix):
-			for k in xrange(0, self.numMatrix):
-				newMatrix = []
-				for j in xrange(0,2):
-					for m in xrange(0,2):
-						newMatrix.append(self.getData(B,B.ncols,j+i*2,m+k*2))
-				BallMatrix[i][k]=newMatrix
-
-		for i in xrange(0,self.numMatrix):
-			for j in xrange(0,i):
-				temporal = deepcopy(BallMatrix)
-				for k in xrange(0,self.numMatrix):
-					if k == 0:
-						m=k
-						BallMatrix[self.numMatrix-1-m][i] = temporal[m][i]
-					else:
-						m=self.numMatrix-k
-						BallMatrix[self.numMatrix-1-k][i] = temporal[m][i]
-						
-				
-						
-				
-	
-	def getData(self, Matrix, order, i, j):
-		return Matrix.data[i*order+j]
 
 
 class Job(object):

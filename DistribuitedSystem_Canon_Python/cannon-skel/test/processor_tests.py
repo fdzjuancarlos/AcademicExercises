@@ -8,7 +8,8 @@ import Ice
 Ice.loadSlice('-I {} cannon.ice'.format(Ice.getSliceDir()))
 import Cannon
 
-from processor import ProcessorI, FrontendI
+from processor import ProcessorI
+from frontend import FrontendI
 
 from common import M1, M2, M6, M4
 
@@ -98,16 +99,3 @@ class ProcessorServantTests(TestCase):
         #assert_that(P0.A.data[0], C.data[0])
         #assert_that(P0.injectA, called().with_args(1, C, ANY_ARG))
         
-    def test_frontend(self):
-        # given
-        front = FrontendI()
-
-        A = M6(1,2,3,4,5,6  ,1,2,3,4,7,8  ,1,2,3,4,12,14  ,1,2,3,4,16,19  ,1,2,3,4,2,2  ,1,2,3,4,3,3  ,
-        1,2,3,4,15,26  ,1,2,3,4,35,46  ,1,2,3,4,55,66)
-        #A = M4(1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4)
-
-        # when
-        front.multiply(A,A)
-
-        # then
-        assert_that(True)

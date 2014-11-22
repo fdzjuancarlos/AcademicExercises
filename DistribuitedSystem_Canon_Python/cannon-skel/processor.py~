@@ -13,7 +13,6 @@ from copy import copy, deepcopy
 
 class CollectorI(Cannon.Collector):
 	def inject(self, index, M, current=None):
-		print("gonna print")
 		printMatrix(M)
 		
   
