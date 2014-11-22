@@ -3,8 +3,10 @@
 import Ice
 Ice.loadSlice('-I {} cannon.ice'.format(Ice.getSliceDir()))
 import Cannon
+import math
 
 import itertools
+from copy import copy, deepcopy
 
 
 def matrix_multiply(A, B):
@@ -25,3 +27,80 @@ def printMatrix(A):
 		for j in range(0, order):
 			print A.data[i*order + j],
 		print("")
+		
+def list_split(oldList, order):
+	newList = list()
+	auxList = list()
+	for i in xrange(0, len(oldList)):
+		auxList.append(oldList[i])
+		if(len(auxList) == order):
+			newList.append(auxList)
+			auxList = list()
+	return newList
+			
+		
+		
+		
+def matrix_split(A, block_order):
+	numMatrix = A.ncols/block_order
+	#A Matrix
+	allMatrix = [[[] for x in range(numMatrix)] for x in range(numMatrix)] 
+	for i in xrange(0,numMatrix):
+		for k in xrange(0, numMatrix):
+			newMatrix = []
+			for j in xrange(0,block_order):
+				for m in xrange(0,block_order):
+					newMatrix.append(getData(A,A.ncols,j+i*block_order,m+k*block_order))
+			allMatrix[i][k]=newMatrix
+
+	return normalMatrix_to_unidimensionalMatrix(allMatrix, numMatrix ,block_order)
+	
+def matrix_horizontal_shift(allMatrix, block_order):
+	for i in xrange(0,numMatrix):
+		for j in xrange(0,i):
+			temporal = deepcopy(allMatrix)
+			for k in xrange(0,numMatrix):
+				if k == 0:
+					m=k
+					allMatrix[i][numMatrix-1-m] = temporal[i][m]
+				else:
+					m=numMatrix-k
+					allMatrix[i][numMatrix-1-k] = temporal[i][m]
+	return allMatrix
+					
+def matrix_vertical_shift(B, block_order):
+	numMatrix = B.ncols/2
+	BallMatrix = [[[] for x in range(numMatrix)] for x in range(numMatrix)] 
+	for i in xrange(0,numMatrix):
+		for k in xrange(0, numMatrix):
+			newMatrix = []
+			for j in xrange(0,2):
+				for m in xrange(0,2):
+					newMatrix.append(getData(B,B.ncols,j+i*2,m+k*2))
+			BallMatrix[i][k]=newMatrix
+
+	for i in xrange(0,numMatrix):
+		for j in xrange(0,i):
+			temporal = deepcopy(BallMatrix)
+			for k in xrange(0,numMatrix):
+				if k == 0:
+					m=k
+					BallMatrix[numMatrix-1-m][i] = temporal[m][i]
+				else:
+					m=numMatrix-k
+					BallMatrix[numMatrix-1-k][i] = temporal[m][i]
+					
+	return normalMatrix_to_unidimensionalMatrix(BallMatrix, numMatrix)
+	
+def normalMatrix_to_unidimensionalMatrix(Matrix, length, blockOrder):
+	unidimensionalMatrix= list()
+	for i in xrange(length):
+		for j in xrange(length):
+			unidimensionalMatrix.append(Cannon.Matrix(blockOrder,Matrix[i][j]))
+	
+	return unidimensionalMatrix
+	
+def getData(Matrix, order, i, j):
+	return Matrix.data[i*order+j]
+	
+	

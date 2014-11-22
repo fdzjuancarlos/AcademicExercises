@@ -5,7 +5,7 @@
 all: run-server
 
 run-server: 
-	./processor.py --Ice.Config=processor.config | tee proxy.out
+	./processor.py --Ice.Config=processor.config
 
 	
 run-test:

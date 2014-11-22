@@ -9,5 +9,5 @@ run-server:
 
 	
 run-test:
-	python -m unittest processor_tests
+	nosetests test/
 
