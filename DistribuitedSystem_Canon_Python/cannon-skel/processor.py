@@ -90,18 +90,13 @@ class Server(Ice.Application):
     def run(self, args):
         broker = self.communicator()
         servant = ProcessorI()
-        collector = CollectorI()
 
         adapter = broker.createObjectAdapter('ProcessorAdapter')
-        collectorAdapter = broker.createObjectAdapter('CollectorAdapter')
         
         proxy = adapter.addWithUUID(servant)
-        newProxy = collectorAdapter.addWithUUID(collector)
 
         print('processor ready: "{}"'.format(proxy))
-        print('collector ready: "{}"'.format(newProxy))
 		
-		collectorAdapter.activate()
         adapter.activate()
         self.shutdownOnInterrupt()
         broker.waitForShutdown()
