@@ -93,7 +93,7 @@ class Server(Ice.Application):
 
         adapter = broker.createObjectAdapter('ProcessorAdapter')
         
-        proxy = adapter.add(servant, Ice.Identity("processor1","processors"))
+        proxy = adapter.addWithUUID(servant)
 
         print('processor ready: "{}"'.format(proxy))
 		

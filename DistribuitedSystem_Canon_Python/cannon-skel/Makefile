@@ -4,9 +4,11 @@
 
 all: run-server
 
-run-server: 
+run-processor: 
 	./processor.py --Ice.Config=processor.config
 
+run-collector:
+	python collector.py --Ice.Config=collector.config
 	
 run-test:
 	nosetests test/

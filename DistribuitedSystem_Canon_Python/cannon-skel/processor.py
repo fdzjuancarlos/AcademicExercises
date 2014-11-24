@@ -55,6 +55,8 @@ class ProcessorI(Cannon.Processor):
     		self.left.injectA(self.A, step+1)
     		self.above.injectB(self.B, step+1)
     	else:
+    		print(step)
+    		print(result)
     		self.target.inject(step, result)
     	self.A = None
     	self.B = None
