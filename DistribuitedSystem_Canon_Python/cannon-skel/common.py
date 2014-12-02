@@ -7,7 +7,6 @@ import Cannon
 def M1(*data):
     return Cannon.Matrix(1, list(data))
 
-
 def M2(*data):
     return Cannon.Matrix(2, list(data))
 

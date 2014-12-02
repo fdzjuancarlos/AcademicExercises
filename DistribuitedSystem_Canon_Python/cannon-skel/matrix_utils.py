@@ -27,6 +27,7 @@ def printMatrix(A):
 		for j in range(0, order):
 			print A.data[i*order + j],
 		print("")
+
 		
 def list_split(oldList, order):
 	newList = list()
@@ -129,7 +130,11 @@ def quitThreeDimensions(A, block_order, numMatrix):
 	for i in A:
 		for j in i:
 			doubleMatrix.append(j)
-			
+	
+	print("THREE DIMENSIONS")
+	print (doubleMatrix)
+	print (numMatrix)
+	print (block_order)
 	singleMatrix=list()
 	for z in xrange(0, numMatrix):
 		for x in xrange(0, block_order):
@@ -154,5 +159,34 @@ def normalMatrix_to_unidimensionalMatrix(Matrix, length, blockOrder):
 	
 def getData(Matrix, order, i, j):
 	return Matrix.data[i*order+j]
+	
+def matrix_join(*list1):
+	singleMatrix=list()
+	doubleMatrix= []
+
+	block_order= list1[0].ncols
+	numMatrix = int(math.sqrt(len(list1)))
+
+	#From N args to double matrix of matrix
+	for i in xrange(0,len(list1)):
+		doubleMatrix.append([])
+		for x in (list1[i].data):
+			doubleMatrix[i].append(x)
+	
+	#from matrix of matrix to single list of matrix
+	for z in xrange(0, numMatrix):
+		for x in xrange(0, block_order):
+			for i in xrange(0,numMatrix):
+				for j in xrange(0,block_order):
+						singleMatrix.append(doubleMatrix[i+z*numMatrix][j+x*block_order])
+	return Cannon.Matrix(int(math.sqrt(len(list1))) * block_order,singleMatrix)
+	
+def matrix_add(A, B):
+	order = A.ncols
+	result = []
+	for i in xrange(0,order*order):
+		result.append(A.data[i] + B.data[i])
+	
+	return Cannon.Matrix(order, result)
 	
 	

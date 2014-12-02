@@ -8,7 +8,7 @@ import Cannon
 from matrix_utils import matrix_multiply
 from matrix_utils import printMatrix, list_split, matrix_horizontal_shift, matrix_vertical_shift, matrix_split
 from collector import CollectorI
-from common import M4
+from common import M4, M1
 import math
 
 class FrontendI(Cannon.Frontend):
@@ -19,7 +19,8 @@ class FrontendI(Cannon.Frontend):
 		
 		
 	def multiply(self, A,B, current=None):
-		pass
+		self.load_processors(A,B)
+		return M1(5)
 		
 	
 	def load_collector(self, collector):
@@ -84,25 +85,13 @@ class Server(Ice.Application):
         frontend.load_collector(Collector)
 
         frontendAdapter = broker.createObjectAdapter('FrontendAdapter')
-        
+        frontend.init_processors()
         
         
         newProxy = frontendAdapter.add(frontend, Ice.Identity("frontend","cannon"))
 
         print('frontend ready: "{}"'.format(newProxy))
-        
-        A = M4(1,  2,  3,  4,
-               5,  6,  7,  8,
-               9, 10, 11, 12,
-              13, 14, 15, 16)
-
-        B = M4(17, 18, 19, 20,
-               21, 22, 23, 24,
-               25, 26, 27, 28,
-               29, 30, 31, 32)
-        
-        frontend.init_processors()
-        frontend.load_processors(A,B)
+       
 		
 		frontendAdapter.activate()
         self.shutdownOnInterrupt()

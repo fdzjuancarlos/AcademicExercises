@@ -46,18 +46,18 @@ class ProcessorI(Cannon.Processor):
     	self.target = target
     	self.above = above
     	self.left = left
+    	self.result = None
         pass
         
     def successMultiplication(self, step):
-    	result = matrix_multiply(self.A,self.B)
-    	#self.target.inject(step, result)
+    	self.result = matrix_multiply(self.A,self.B)
     	if self.actualStep < self.maximumStep -1:
     		self.left.injectA(self.A, step+1)
     		self.above.injectB(self.B, step+1)
     	else:
     		print(step)
-    		print(result)
-    		self.target.inject(step, result)
+    		print(self.result)
+    		self.target.inject(step, self.result)
     	self.A = None
     	self.B = None
     	self.actualStep = self.actualStep +1

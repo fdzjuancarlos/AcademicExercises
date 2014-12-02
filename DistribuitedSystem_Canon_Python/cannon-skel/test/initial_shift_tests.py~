@@ -19,7 +19,7 @@ class MatrixInitialShiftTests(TestCase):
         actual = matrix_horizontal_shift(M, block_order=1)
 
         # then
-        expected = Cannon.Matrix(2, [1, 2,
+        expected = Cannon.Matrix(1, [1, 2,
                                      4, 3])
 
         assert_that(actual, is_(expected))
@@ -156,7 +156,7 @@ class MatrixInitialShiftTests(TestCase):
 
         assert_that(actual, is_(expected))
 
-    def tesst_vertical_shift_4x4_by_blocks_2x2(self):
+    def test_vertical_shift_4x4_by_blocks_2x2(self):
         # given
         original = M4(1,  2,  3,  4,
                       5,  6,  7,  8,
@@ -174,7 +174,7 @@ class MatrixInitialShiftTests(TestCase):
 
         assert_that(actual, is_(expected))
 
-    def tesst_vertical_shift_6x6_blocks_2x2(self):
+    def test_vertical_shift_6x6_blocks_2x2(self):
         # given
         original = M6(1,  2,  3,  4,  5,  6,
                       7,  8,  9, 10, 11, 12,
@@ -196,7 +196,7 @@ class MatrixInitialShiftTests(TestCase):
 
         assert_that(actual, is_(expected))
 
-    def tesst_vertical_shift_6x6_blocks_3x3(self):
+    def test_vertical_shift_6x6_blocks_3x3(self):
         # given
         original = M6(1,  2,  3,  4,  5,  6,
                       7,  8,  9, 10, 11, 12,
