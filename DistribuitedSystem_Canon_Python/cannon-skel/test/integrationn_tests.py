@@ -18,14 +18,17 @@ from common import M1, M2, M3, M4
 class Broker(object):
     def __init__(self, properties=None):
         properties = properties or []
+        print("Hah")
 
         data = Ice.InitializationData()
         data.properties = Ice.createProperties()
+        print("Hah1")
         for p in properties:
             data.properties.setProperty(p[0], p[1])
-
+        print("Hah2")
         self.communicator = Ice.initialize(data)
         self.adapter = self.communicator.createObjectAdapterWithEndpoints('Adapter', 'tcp')
+        print("Hah3")
         self.adapter.activate()
 
     def add_servant(self, servant, iface):
@@ -39,17 +42,20 @@ class Broker(object):
 
 class ProcessorObjectTests(TestCase):
     def setUp(self):
+    	print("prebroker")
         self.broker = Broker([
             ["Ice.ThreadPool.Server.Size", "10"],
             ["Ice.ThreadPool.Client.Size", "10"]])
+        print("postbroker")
 
     def tearDown(self):
         self.broker.shutdown()
 
-    def tesst_collector_called(self):
+    def test_collector_called(self):
         # given
+        print("Hah4")
         processor = self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
-
+        print("Hah")
         collector_servant = Mimic(Spy, Cannon.Collector)
         collector = self.broker.add_servant(collector_servant, Cannon.CollectorPrx)
 
@@ -59,6 +65,7 @@ class ProcessorObjectTests(TestCase):
                7, 8)
 
         # when
+        print("Hah")
         processor.init(0, 1, None, None, collector)
         processor.injectA(A, 0)
         processor.injectB(B, 0)
@@ -70,34 +77,30 @@ class ProcessorObjectTests(TestCase):
                     called().async(1).with_args(0, C, anything()))
 
     def test_linked_processors(self):
-    	print("hah1")
         P0 = self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
-    	print("hah2")
 
         P1_servant = Mimic(Spy, Cannon.Processor)
         P1 = self.broker.add_servant(P1_servant, Cannon.ProcessorPrx)
-    	print("hah3")
+
         P2_servant = Mimic(Spy, Cannon.Processor)
         P2 = self.broker.add_servant(P2_servant, Cannon.ProcessorPrx)
-    	print("hah4")
+
         collector_servant = Mimic(Spy, Cannon.Collector)
         collector = self.broker.add_servant(collector_servant, Cannon.CollectorPrx)
-    	print("hah5")
+
         A0 = M1(1)
         B0 = M1(5)
-    	print("hah6")
+
         P0.init(3, 2, P2, P1, collector)
-        print("hah7")
         P0.injectA(A0, 0)
-        print("hah8")
         P0.injectB(B0, 0)
-    	print("hah9")
+
         assert_that(P1_servant.injectA,
                     called().async(1).with_args(A0, 1, anything()))
         assert_that(P2_servant.injectB,
                     called().async(1).with_args(B0, 1, anything()))
 
-    def tesst_2x2_processors_2x2_operands(self):
+    def test_2x2_processors_2x2_operands(self):
         '''
         initial shift:
         1 2     1 2      5 6    5 8
@@ -152,20 +155,25 @@ class ProcessorObjectTests(TestCase):
 
 class EndToEndTests(TestCase):
     def setUp(self):
+    	print("endtoendPrebroker")
         self.broker = Broker([
             ["Ice.ThreadPool.Server.Size", "20"],
             ["Ice.ThreadPool.Client.Size", "20"]])
+    	print("endtoendPostbroker")
 
     def tearDown(self):
         self.broker.shutdown()
 
-    def tesst_2x2_processors_2x2_operands(self):
+    def test_2x2_processors_2x2_operands(self):
         nprocs = 4
 
         # given
+    	print("precrear")
         P = [self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
              for i in range(nprocs)]
+    	print("prefrontend")
         frontend = self.broker.add_servant(FrontendI(P), Cannon.FrontendPrx)
+    	print("postfrontend")
 
         A = M2(1, 2,
                3, 4)
@@ -173,7 +181,9 @@ class EndToEndTests(TestCase):
                1, 0)
 
         # when
+    	print("premultiply")
         C = frontend.multiply(A, B)
+    	print("postmultiply")
 
         # then
         expected = M2(5,  5,

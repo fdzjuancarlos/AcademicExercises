@@ -1,3 +1,2 @@
 FrontendAdapter.Endpoints=tcp -p 4059 -h 10.211.55.9
 Ice.ThreadPool.Server.Size = 10
-Ice.ThreadPool.Client.Size = 10

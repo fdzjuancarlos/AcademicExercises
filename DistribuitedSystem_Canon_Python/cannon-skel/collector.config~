@@ -1,5 +1,5 @@
 CollectorAdapter.Endpoints=tcp -h 10.211.55.9
-Ice.ThreadPool.Server.Size = 10
+
 
 
 

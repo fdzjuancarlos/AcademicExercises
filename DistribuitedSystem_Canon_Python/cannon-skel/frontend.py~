@@ -20,7 +20,7 @@ class FrontendI(Cannon.Frontend):
 		#self.collector = CollectorI()
 		
 	def multiply(self, A,B, current=None):
-		print("preinit en multiply")
+		print("preinit")
 		self.init_processors()
 		self.load_processors(A,B)
 		return M1(5)

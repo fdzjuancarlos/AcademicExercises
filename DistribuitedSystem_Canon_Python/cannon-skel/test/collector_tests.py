@@ -10,9 +10,10 @@ class CollectorServantTests(TestCase):
     """
     These are NOT remote tests. We directly instantiate servants here.
     """
-    def tesst_order_1_block_1x1(self):
+    def test_order_1_block_1x1(self):
         # given
-        collector = CollectorI(order=1)
+        order=1
+        collector = CollectorI(order)
 
         # when
         M = M1(1)
@@ -21,9 +22,10 @@ class CollectorServantTests(TestCase):
         # then
         assert_that(collector.get_result(), is_(M))
 
-    def tesst_order_4_blocks_1x1(self):
+    def test_order_4_blocks_1x1(self):
         # given
-        collector = CollectorI(order=2)
+        order=2
+        collector = CollectorI(order)
         collector.inject(0, M1(1))
         collector.inject(1, M1(2))
         collector.inject(2, M1(3))
@@ -35,9 +37,10 @@ class CollectorServantTests(TestCase):
         assert_that(collector.get_result(), is_(M2(1, 2,
                                                    3, 4)))
 
-    def tesst_order_4_blocks_2x2(self):
+    def test_order_4_blocks_2x2(self):
         # given
-        collector = CollectorI(order=2)
+        order=2
+        collector = CollectorI(order)
         collector.inject(0, M2(1, 2,
                                5, 6))
         collector.inject(1, M2(3, 4,
@@ -59,7 +62,8 @@ class CollectorServantTests(TestCase):
 
     def tesst_order_4_blocks_1x1_with_missing_blocks(self):
         # given
-        collector = CollectorI(order=2)
+        order=2
+        collector = CollectorI(order)
         collector.inject(0, M1(1))
         collector.inject(1, M1(2))
         # block (1,0) never injected

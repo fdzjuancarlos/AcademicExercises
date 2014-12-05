@@ -28,7 +28,8 @@ class CollectorI(Cannon.Collector):
 	def __init__(self, totalOrder):
 		self.totalOrder = totalOrder*totalOrder
 		self.matrix = list()
-		self.isReady = threading.Semaphore(0)
+		self.isReady = threading.Lock()
+		self.isReady.acquire()
 		self.mutex = threading.Lock()
 
     def get_result(self):

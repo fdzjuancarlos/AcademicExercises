@@ -35,23 +35,24 @@ class Job(object):
 class ProcessorI(Cannon.Processor):
 	A= None
 	B= None
+	actualStep = None
 	
     def __init__(self):
         self.work_queue = Queue()
 	
     def init(self, index, order, above, left, target, current=None):
+    	print("subZero")
     	self.actualStep = 0
     	self.index = index
-    	self.maximumStep = order/2
+    	self.maximumStep = order
     	self.target = target
     	self.above = above
     	self.left = left
     	self.result = None
-        pass
         
     def successMultiplication(self, step):
     	self.result = matrix_multiply(self.A,self.B)
-    	if self.actualStep < self.maximumStep -1:
+    	if self.actualStep < self.maximumStep :
     		self.left.injectA(self.A, step+1)
     		self.above.injectB(self.B, step+1)
     	else:
@@ -67,6 +68,7 @@ class ProcessorI(Cannon.Processor):
     		job.execute(self)
 
     def injectA(self, A, step, current=None):
+    	print("hah")
     	if self.actualStep == step:
 			if self.B is not None:
 				self.A = A
