@@ -131,10 +131,6 @@ def quitThreeDimensions(A, block_order, numMatrix):
 		for j in i:
 			doubleMatrix.append(j)
 	
-	print("THREE DIMENSIONS")
-	print (doubleMatrix)
-	print (numMatrix)
-	print (block_order)
 	singleMatrix=list()
 	for z in xrange(0, numMatrix):
 		for x in xrange(0, block_order):

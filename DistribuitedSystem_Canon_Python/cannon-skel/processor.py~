@@ -6,15 +6,11 @@ import sys
 import Ice
 Ice.loadSlice('-I {} cannon.ice'.format(Ice.getSliceDir()))
 import Cannon
-from matrix_utils import matrix_multiply
+from matrix_utils import matrix_multiply, matrix_add
 from matrix_utils import printMatrix
-from Queue import Queue
+import Queue
 from copy import copy, deepcopy
-
-class CollectorI(Cannon.Collector):
-	def inject(self, index, M, current=None):
-		printMatrix(M)
-		
+import time
   
 
 
@@ -38,10 +34,9 @@ class ProcessorI(Cannon.Processor):
 	actualStep = None
 	
     def __init__(self):
-        self.work_queue = Queue()
+        self.work_queue = Queue.PriorityQueue()
 	
     def init(self, index, order, above, left, target, current=None):
-    	print("subZero")
     	self.actualStep = 0
     	self.index = index
     	self.maximumStep = order
@@ -51,22 +46,25 @@ class ProcessorI(Cannon.Processor):
     	self.result = None
         
     def successMultiplication(self, step):
-    	self.result = matrix_multiply(self.A,self.B)
-    	print("hah")
-    	if self.actualStep < self.maximumStep :
-    		self.left.injectA(self.A, step+1)
-    		self.above.injectB(self.B, step+1)
-    	else:
-    		print(step)
-    		print(self.result)
-    		self.target.inject(step, self.result)
-    	self.A = None
-    	self.B = None
+		if self.result:
+    		self.result = matrix_add(self.result,matrix_multiply(self.A,self.B))
+		else:
+			self.result = matrix_multiply(self.A,self.B)
     	self.actualStep = self.actualStep +1
-    	while not self.work_queue.empty():
+    	if self.actualStep < self.maximumStep :
+    		self.left.injectA(self.A, self.actualStep)
+    		self.A = None
+    		self.above.injectB(self.B, self.actualStep)
+			self.B = None
+    	else:
+    		self.target.inject(self.index, self.result)
+		
+		stop = 0
+    	while not self.work_queue.empty() and stop < 5:
     		job = self.work_queue.get()
+    		job[1].execute(self)
+			stop = stop +1
     		self.work_queue.task_done()
-    		job.execute(self)
 
     def injectA(self, A, step, current=None):
     	if self.actualStep == step:
@@ -76,7 +74,8 @@ class ProcessorI(Cannon.Processor):
 			else:
 				self.A = A
 		else:
-			self.work_queue.put(Job('A',A, step))
+			self.work_queue.put((step,Job('A',A, step)))
+			print("Guardando un " + str(step))
 			
 
     def injectB(self, B, step, current=None):
@@ -87,7 +86,8 @@ class ProcessorI(Cannon.Processor):
 			else:
 				self.B = B
 		else:
-			self.work_queue.put(Job('B',B, step))
+			self.work_queue.put((step,Job('B',B, step)))
+			print("Guardando un " + str(step))
 
 
 class Server(Ice.Application):

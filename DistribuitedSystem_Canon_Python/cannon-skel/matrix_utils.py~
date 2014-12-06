@@ -185,7 +185,7 @@ def matrix_add(A, B):
 	order = A.ncols
 	result = []
 	for i in xrange(0,order*order):
-		result.append(A.data[i] + A.data[i])
+		result.append(A.data[i] + B.data[i])
 	
 	return Cannon.Matrix(order, result)
 	

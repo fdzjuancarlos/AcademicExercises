@@ -26,6 +26,7 @@ class Broker(object):
 
         self.communicator = Ice.initialize(data)
         self.adapter = self.communicator.createObjectAdapterWithEndpoints('Adapter', 'tcp')
+
         self.adapter.activate()
 
     def add_servant(self, servant, iface):
@@ -43,13 +44,13 @@ class ProcessorObjectTests(TestCase):
             ["Ice.ThreadPool.Server.Size", "10"],
             ["Ice.ThreadPool.Client.Size", "10"]])
 
+
     def tearDown(self):
         self.broker.shutdown()
 
-    def tesst_collector_called(self):
+    def test_collector_called(self):
         # given
         processor = self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
-
         collector_servant = Mimic(Spy, Cannon.Collector)
         collector = self.broker.add_servant(collector_servant, Cannon.CollectorPrx)
 
@@ -70,34 +71,30 @@ class ProcessorObjectTests(TestCase):
                     called().async(1).with_args(0, C, anything()))
 
     def test_linked_processors(self):
-    	print("hah1")
         P0 = self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
-    	print("hah2")
 
         P1_servant = Mimic(Spy, Cannon.Processor)
         P1 = self.broker.add_servant(P1_servant, Cannon.ProcessorPrx)
-    	print("hah3")
+
         P2_servant = Mimic(Spy, Cannon.Processor)
         P2 = self.broker.add_servant(P2_servant, Cannon.ProcessorPrx)
-    	print("hah4")
+
         collector_servant = Mimic(Spy, Cannon.Collector)
         collector = self.broker.add_servant(collector_servant, Cannon.CollectorPrx)
-    	print("hah5")
+
         A0 = M1(1)
         B0 = M1(5)
-    	print("hah6")
+
         P0.init(3, 2, P2, P1, collector)
-        print("hah7")
         P0.injectA(A0, 0)
-        print("hah8")
         P0.injectB(B0, 0)
-    	print("hah9")
+
         assert_that(P1_servant.injectA,
                     called().async(1).with_args(A0, 1, anything()))
         assert_that(P2_servant.injectB,
                     called().async(1).with_args(B0, 1, anything()))
 
-    def tesst_2x2_processors_2x2_operands(self):
+    def test_2x2_processors_2x2_operands(self):
         '''
         initial shift:
         1 2     1 2      5 6    5 8
@@ -159,7 +156,7 @@ class EndToEndTests(TestCase):
     def tearDown(self):
         self.broker.shutdown()
 
-    def tesst_2x2_processors_2x2_operands(self):
+    def test_2x2_processors_2x2_operands(self):
         nprocs = 4
 
         # given
@@ -181,7 +178,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_3x3_processors_3x3_operands(self):
+    def test_3x3_processors_3x3_operands(self):
         nprocs = 9
 
         # given
@@ -206,7 +203,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_2x2_processors_4x4_operands(self):
+    def test_2x2_processors_4x4_operands(self):
         nprocs = 4
 
         # given
@@ -235,7 +232,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_5x5_processors_200x200_operands(self):
+    def test_5x5_processors_200x200_operands(self):
         nprocs = 25
 
         # given

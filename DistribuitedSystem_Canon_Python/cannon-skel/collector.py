@@ -16,7 +16,7 @@ class CollectorI(Cannon.Collector):
 	def inject(self, index, M, current=None):
 		self.mutex.acquire()
 		self.matrix.append((index, M))
-		sorted(self.matrix, key=lambda index: self.matrix[0])
+		self.matrix =sorted(self.matrix, key=lambda tup: tup[0])
 		if (len(self.matrix) == self.totalOrder):
 			listMatrix = []
 			for i in self.matrix:

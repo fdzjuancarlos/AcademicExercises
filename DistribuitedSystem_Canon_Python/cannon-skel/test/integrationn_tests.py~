@@ -18,17 +18,15 @@ from common import M1, M2, M3, M4
 class Broker(object):
     def __init__(self, properties=None):
         properties = properties or []
-        print("Hah")
 
         data = Ice.InitializationData()
         data.properties = Ice.createProperties()
-        print("Hah1")
         for p in properties:
             data.properties.setProperty(p[0], p[1])
-        print("Hah2")
+
         self.communicator = Ice.initialize(data)
         self.adapter = self.communicator.createObjectAdapterWithEndpoints('Adapter', 'tcp')
-        print("Hah3")
+
         self.adapter.activate()
 
     def add_servant(self, servant, iface):
@@ -42,20 +40,17 @@ class Broker(object):
 
 class ProcessorObjectTests(TestCase):
     def setUp(self):
-    	print("prebroker")
         self.broker = Broker([
             ["Ice.ThreadPool.Server.Size", "10"],
             ["Ice.ThreadPool.Client.Size", "10"]])
-        print("postbroker")
+
 
     def tearDown(self):
         self.broker.shutdown()
 
     def test_collector_called(self):
         # given
-        print("Hah4")
         processor = self.broker.add_servant(ProcessorI(), Cannon.ProcessorPrx)
-        print("Hah")
         collector_servant = Mimic(Spy, Cannon.Collector)
         collector = self.broker.add_servant(collector_servant, Cannon.CollectorPrx)
 
@@ -65,7 +60,6 @@ class ProcessorObjectTests(TestCase):
                7, 8)
 
         # when
-        print("Hah")
         processor.init(0, 1, None, None, collector)
         processor.injectA(A, 0)
         processor.injectB(B, 0)
@@ -183,6 +177,7 @@ class EndToEndTests(TestCase):
         # when
     	print("premultiply")
         C = frontend.multiply(A, B)
+    	print("postmultiply")
 
         # then
         expected = M2(5,  5,
@@ -190,7 +185,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_3x3_processors_3x3_operands(self):
+    def test_3x3_processors_3x3_operands(self):
         nprocs = 9
 
         # given
@@ -215,7 +210,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_2x2_processors_4x4_operands(self):
+    def test_2x2_processors_4x4_operands(self):
         nprocs = 4
 
         # given
@@ -244,7 +239,7 @@ class EndToEndTests(TestCase):
 
         assert_that(C, is_(expected))
 
-    def tesst_5x5_processors_200x200_operands(self):
+    def test_5x5_processors_200x200_operands(self):
         nprocs = 25
 
         # given
