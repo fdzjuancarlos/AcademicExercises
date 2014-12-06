@@ -98,7 +98,10 @@ class Server(Ice.Application):
         proxy = adapter.addWithUUID(servant)
 
         print('processor ready: "{}"'.format(proxy))
-		
+
+		f=open('processorProxy', 'a')
+		f.write('"{}" '.format(proxy))
+		f.close()
         adapter.activate()
         self.shutdownOnInterrupt()
         broker.waitForShutdown()

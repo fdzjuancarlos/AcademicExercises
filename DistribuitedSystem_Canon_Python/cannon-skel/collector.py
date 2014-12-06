@@ -35,9 +35,10 @@ class CollectorI(Cannon.Collector):
     	#fix with asynchronous
 
     	self.isReady.acquire()
-
+		result = self.matrix
+		self.matrix = list()
     		
-    	return self.matrix
+    	return result
     		
 
 class Server(Ice.Application):
