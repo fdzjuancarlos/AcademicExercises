@@ -17,9 +17,6 @@ run-frontend:
 	
 run-test:
 	nosetests test/
-	
-clean: killprocessors
-	rm 
 
 
 
