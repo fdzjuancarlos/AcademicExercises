@@ -14,14 +14,24 @@ class Client(Ice.Application):
 		frontend = Cannon.FrontendPrx.checkedCast(proxy)
 			
 			
-		A = M4(1,  2,  3,  4, 5,  6,  7,  8, 9, 10, 11, 12, 13, 14, 15, 16)
+		A = M400()
 
-		B = M4(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
+		B = M400()
         
 
 		print(frontend.multiply(A,B))
 
 		return 0
+		
+	
+def M400():
+	
+	data = []
+	
+	for i in xrange(0,400*400):
+		data.append(i)
+		
+	return Cannon.Matrix(400, data)
 		
 
 
