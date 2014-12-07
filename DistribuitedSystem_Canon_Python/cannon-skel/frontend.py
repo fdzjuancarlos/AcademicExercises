@@ -94,33 +94,31 @@ class FrontendI(Cannon.Frontend):
 		
 class Server(Ice.Application):
     def run(self, argv):
-        broker = self.communicator()
+		broker = self.communicator()
         
-		proxy = [self.communicator().stringToProxy(argv[2]),self.communicator().stringToProxy(argv[3]),
-				self.communicator().stringToProxy(argv[4]),self.communicator().stringToProxy(argv[5])]
+
+		proxy = [self.communicator().stringToProxy(argv[1]),self.communicator().stringToProxy(argv[2]),
+				self.communicator().stringToProxy(argv[3]),self.communicator().stringToProxy(argv[4])]
 		
 		processor = []
 		for i in proxy:
 			processor.append(Cannon.ProcessorPrx.checkedCast(i))
         
         
-        frontend = FrontendI(processor)
-        proxyCollector = self.communicator().stringToProxy(argv[1])
-        Collector= Cannon.CollectorPrx.checkedCast(proxyCollector)
-        frontend.load_collector(Collector)
+		frontend = FrontendI(processor)
 
-        frontendAdapter = broker.createObjectAdapter('FrontendAdapter')
-        frontend.init_processors()
+		frontendAdapter = broker.createObjectAdapter('FrontendAdapter')
+		frontend.init_processors()
         
         
-        newProxy = frontendAdapter.add(frontend, Ice.Identity("frontend","cannon"))
+		newProxy = frontendAdapter.add(frontend, Ice.Identity("frontend","cannon"))
 
-        print('frontend ready: "{}"'.format(newProxy))
+		print('frontend ready: "{}"'.format(newProxy))
        
 		
 		frontendAdapter.activate()
-        self.shutdownOnInterrupt()
-        broker.waitForShutdown()
+		self.shutdownOnInterrupt()
+		broker.waitForShutdown()
 
 
 if __name__ == '__main__':

@@ -75,7 +75,6 @@ class ProcessorI(Cannon.Processor):
 				self.A = A
 		else:
 			self.work_queue.put((step,Job('A',A, step)))
-			print("Guardando un " + str(step))
 			
 
     def injectB(self, B, step, current=None):
@@ -87,7 +86,6 @@ class ProcessorI(Cannon.Processor):
 				self.B = B
 		else:
 			self.work_queue.put((step,Job('B',B, step)))
-			print("Guardando un " + str(step))
 
 
 class Server(Ice.Application):
@@ -100,7 +98,10 @@ class Server(Ice.Application):
         proxy = adapter.addWithUUID(servant)
 
         print('processor ready: "{}"'.format(proxy))
-		
+
+		f=open('processorProxy', 'a')
+		f.write('"{}"\n'.format(proxy))
+		f.close()
         adapter.activate()
         self.shutdownOnInterrupt()
         broker.waitForShutdown()

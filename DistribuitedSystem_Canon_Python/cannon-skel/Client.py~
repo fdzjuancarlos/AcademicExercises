@@ -10,7 +10,7 @@ from common import M4
 
 class Client(Ice.Application):
 	def run(self, argv):
-		proxy = self.communicator().stringToProxy("cannon/frontend -t -e 1.1:tcp -h 127.0.0.1 -p 4059")
+		proxy = self.communicator().stringToProxy(argv[1])
 		frontend = Cannon.FrontendPrx.checkedCast(proxy)
 			
 			

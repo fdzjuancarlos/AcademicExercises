@@ -71,12 +71,6 @@ class FrontendI(Cannon.Frontend):
 					aboveOffset = i-1
 				self.organizedMProcessors[i][k].init(i*self.orderMatrixProcessors+k, self.orderMatrixProcessors, self.organizedMProcessors[aboveOffset][k], self.organizedMProcessors[i][leftOffset], self.target)
 				
-		singleMatrix = []
-		for i in self.organizedMProcessors:
-			for j in i:
-				singleMatrix.append(j)
-		
-		self.organizedMProcessors = singleMatrix
 						
 	def load_processors(self,A, B):
 		orderMatrixProcessors = int(math.sqrt(len(self.matrixProcessors)))
@@ -100,33 +94,43 @@ class FrontendI(Cannon.Frontend):
 		
 class Server(Ice.Application):
     def run(self, argv):
-        broker = self.communicator()
+		broker = self.communicator()
         
-		proxy = [self.communicator().stringToProxy(argv[2]),self.communicator().stringToProxy(argv[3]),
-				self.communicator().stringToProxy(argv[4]),self.communicator().stringToProxy(argv[5])]
+
+		#proxy = [self.communicator().stringToProxy(argv[1]),self.communicator().stringToProxy(argv[2]),
+		#		self.communicator().stringToProxy(argv[3]),self.communicator().stringToProxy(argv[4])]
 		
 		processor = []
-		for i in proxy:
-			processor.append(Cannon.ProcessorPrx.checkedCast(i))
+		#for i in proxy:
+		#	processor.append(Cannon.ProcessorPrx.checkedCast(i))
         
+		f = open("processorProxy", "r")
+		prx = ""
+		#prx = f.readline()
+		for prx in f:
+			nprx = prx[:-1]
+			print(prx)
+			n_prx = self.communicator().stringToProxy(nprx)
+			processor.append(Cannon.ProcessorPrx.checkedCast(n_prx))
+		f.close()
+		fasitoi = open("processorProxy", "w")
+		fasitoi.write("")
+		#f.close()
         
-        frontend = FrontendI(processor)
-        proxyCollector = self.communicator().stringToProxy(argv[1])
-        Collector= Cannon.CollectorPrx.checkedCast(proxyCollector)
-        frontend.load_collector(Collector)
+		frontend = FrontendI(processor)
 
-        frontendAdapter = broker.createObjectAdapter('FrontendAdapter')
-        frontend.init_processors()
+		frontendAdapter = broker.createObjectAdapter('FrontendAdapter')
+		frontend.init_processors()
         
         
-        newProxy = frontendAdapter.add(frontend, Ice.Identity("frontend","cannon"))
+		newProxy = frontendAdapter.add(frontend, Ice.Identity("frontend","cannon"))
 
-        print('frontend ready: "{}"'.format(newProxy))
+		print('frontend ready: "{}"'.format(newProxy))
        
 		
 		frontendAdapter.activate()
-        self.shutdownOnInterrupt()
-        broker.waitForShutdown()
+		self.shutdownOnInterrupt()
+		broker.waitForShutdown()
 
 
 if __name__ == '__main__':

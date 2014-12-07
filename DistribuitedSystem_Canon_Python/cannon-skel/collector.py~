@@ -17,7 +17,6 @@ class CollectorI(Cannon.Collector):
 		self.mutex.acquire()
 		self.matrix.append((index, M))
 		self.matrix =sorted(self.matrix, key=lambda tup: tup[0])
-		print(self.matrix)
 		if (len(self.matrix) == self.totalOrder):
 			listMatrix = []
 			for i in self.matrix:
@@ -36,7 +35,8 @@ class CollectorI(Cannon.Collector):
     	#fix with asynchronous
 
     	self.isReady.acquire()
-
+		result = self.matrix
+		self.matrix = list()
     		
     	return self.matrix
     		
